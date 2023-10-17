@@ -40,8 +40,8 @@ class Usercontroller {
         let { id, name, email, role } = req.body;
         let result = await User.update(id, name, email, role);
 
-        if(result != undefined){
-            if(result.status){
+        if (result != undefined) {
+            if (result.status) {
                 res.send("Usuário atualizado com sucesso.")
             } else {
                 res.status(406);
@@ -51,6 +51,20 @@ class Usercontroller {
             res.status(406);
             res.send("Ocorreu um erro.");
         }
+    }
+
+    async deleteUser(req, res) {
+        let { id } = req.body;
+
+        let result = await User.delete(id);
+        if (result) {
+            res.status(200);
+            res.send("Usuário excluído com sucesso.");
+        } else {
+            res.status(406);
+            res.send("Ocorreu um erro.");
+        }
+
     }
 }
 

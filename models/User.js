@@ -75,7 +75,7 @@ class User {
             try {
                 await knex.update(editUser).where({ id: id }).table("users");
                 return { status: true }
-            } catch (error) {
+            } catch (err) {
                 return { status: false, err: err }
             }
 
@@ -83,6 +83,15 @@ class User {
             return { status: false, err: "o usuário não existe." }
         }
 
+    }
+
+    async delete(id){
+        try {
+            await knex("users").where({id: id}).del();
+            return {status: true}
+        } catch (err) {
+            return { status: false, err: err }
+        }
     }
 
 }
