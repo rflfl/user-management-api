@@ -1,4 +1,5 @@
 let User = require("../models/User")
+let PasswordToken = require("../models/PasswordToken")
 class Usercontroller {
     async index(req, res) {
         let users = await User.findAll();
@@ -65,6 +66,19 @@ class Usercontroller {
             res.send("Ocorreu um erro.");
         }
 
+    }
+
+    async revocerPassaword(req, res) {
+        let email = req.body.email;
+        let result = await PasswordToken.create(email);
+        if (result.status) {
+            //enviar o email com o token para recuperar a senha
+            res.status(200);
+            res.send(""+result.token);
+        } else {
+            res.status(406);
+            res.send(result.err)
+        }
     }
 }
 

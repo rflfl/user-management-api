@@ -5,13 +5,20 @@ class PasswordToken {
     async create(email) {
         let user = await User.findByEmail(email);
         if (user != undefined) {
-            await knex.insert({
-                user_id: user.id,
-                used: 0,
-                token: Date.now()
-            })
+            try {
+                let token = Date.now();
+                await knex.insert({
+                    user_id: user.id,
+                    used: 0,
+                    token: token
+                }).table("passwordtokens");
+                return { status: true, token: token }
+            } catch (error) {
+                console.log(err)
+                return { status: false, err: err }
+            }
         } else {
-            return { status: false, err: "O e-mail não existe no bancp de dados" }
+            return { status: false, err: "O e-mail não existe no banco de dados" }
         }
     }
 }
