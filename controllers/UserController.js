@@ -74,10 +74,24 @@ class Usercontroller {
         if (result.status) {
             //enviar o email com o token para recuperar a senha
             res.status(200);
-            res.send(""+result.token);
+            res.send("" + result.token);
         } else {
             res.status(406);
             res.send(result.err)
+        }
+    }
+
+    async changePassword(req, res) {
+        let token = req.body.token;
+        let password = req.body.password;
+        let isValidToken = await PasswordToken.validate(token);
+        if (isValidToken.status) {
+            await User.changePassword(password, isValidToken.token.user_id, isValidToken.token.token);
+            res.status(200);
+            res.send("Senha alterada!");
+        } else {
+            res.status(406);
+            res.send('Token inválido!');
         }
     }
 }
