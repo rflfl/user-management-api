@@ -16,6 +16,7 @@ As seguintes dependências são usadas no projeto:
 - jsonwebtoken
 - knex
 - mysql2
+- cors
 
 
 ## Usuário
