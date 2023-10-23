@@ -112,10 +112,11 @@ class Usercontroller {
                 res.json({token:token});
             }else{
                 res.status(406);
-                res.send("Email/Senha incorreta!")
+                res.json({err:"Email/Senha incorreta!"})
             }
         } else {
-            res.json({status: false});
+            res.status(406);
+            res.json({status: false, err: 'O Usuário não existe.'});
         }
     }
 }
