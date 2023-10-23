@@ -59,8 +59,7 @@ class Usercontroller {
     }
 
     async deleteUser(req, res) {
-        let { id } = req.body;
-
+        let { id } = req.params;
         let result = await User.delete(id);
         if (result) {
             res.status(200);
